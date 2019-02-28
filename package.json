@@ -1,5 +1,27 @@
 {
   "name": "twitter-clone",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "@rails/webpacker": "3.5",
+    "babel-preset-react": "^6.24.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
+    "react_ujs": "^2.4.4"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "2.11.2"
+  },
+  "description": "This README would normally document whatever steps are necessary to get the application up and running.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
 }
