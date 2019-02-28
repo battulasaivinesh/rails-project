@@ -1,37 +1,42 @@
 import React from "react";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import TweetBox from "./TweetBox";
 import TweetList from "./TweetList";
+import TweetActions from "../actions/TweetActions";
+import TweetStore from "../stores/TweetStore";
 
-let mockTweets = [
-  { id: 0, name: "Vinesh", body: "My Tweet" },
-  { id: 1, name: "Vinesh", body: "My Second Tweet" },
-  { id: 2, name: "Vinesh", body: "My Third Tweet" }
-];
+TweetActions.getAllTweets();
+
+let getAppState = () => {
+  return TweetStore.getAll();
+};
 
 class Main extends React.Component {
   state = {
-    tweetsList: mockTweets
+    tweetsList: getAppState()
   };
 
-  addTweet = tweetToAdd => {
-    let newTweetsList = this.state.tweetsList;
-    newTweetsList.unshift({ id: Date.now(), name: "Guest", body: tweetToAdd });
-    this.setState({ tweetsList: newTweetsList });
+  componentDidMount() {
+    TweetStore.addChangeListner(this._onChange);
+  }
+
+  componentWillUnmount() {
+    TweetStore.removeChangeListner(this._onChange);
+  }
+
+  _onChange = () => {
+    this.setState({ tweetsList: getAppState() });
   };
 
   render() {
     console.log("Component");
     return (
       <div className="container">
-        <TweetBox sendTweet={this.addTweet} />
+        <TweetBox />
         <TweetList tweets={this.state.tweetsList} />
       </div>
     );
   }
 }
 
-Main.propTypes = {
-  greeting: PropTypes.string
-};
 export default Main;
