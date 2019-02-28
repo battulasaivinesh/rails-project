@@ -1,40 +1,31 @@
 import React from "react";
-// import PropTypes from "prop-types";
-import TweetBox from "./TweetBox";
-import TweetList from "./TweetList";
-import TweetActions from "../actions/TweetActions";
-import TweetStore from "../stores/TweetStore";
+import Index from "./Index";
+import Follow from "./Follow";
 
-TweetActions.getAllTweets();
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch,
+  HashRouter
+} from "react-router-dom";
 
-let getAppState = () => {
-  return TweetStore.getAll();
-};
+class App extends React.Component {
+  render() {
+    return <div>{this.props.children}</div>;
+  }
+}
 
 class Main extends React.Component {
-  state = {
-    tweetsList: getAppState()
-  };
-
-  componentDidMount() {
-    TweetStore.addChangeListner(this._onChange);
-  }
-
-  componentWillUnmount() {
-    TweetStore.removeChangeListner(this._onChange);
-  }
-
-  _onChange = () => {
-    this.setState({ tweetsList: getAppState() });
-  };
-
   render() {
     console.log("Component");
     return (
-      <div className="container">
-        <TweetBox />
-        <TweetList tweets={this.state.tweetsList} />
-      </div>
+      <HashRouter>
+        <Switch>
+          <Route exact path="/" component={Index} />
+          <Route path="/follow" component={Follow} />
+        </Switch>
+      </HashRouter>
     );
   }
 }
